@@ -10,7 +10,7 @@ export const PreviewWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
 `;
 
