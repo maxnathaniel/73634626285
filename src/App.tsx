@@ -41,7 +41,6 @@ function App() {
     updateJson,
     updateWidth,
   } = useStore((state) => state);
-  console.log('fileName', fileName);
   const newJson = ymap.get(fileName) as Animation;
 
   const [data, setData] = useState<Res | {}>({});
