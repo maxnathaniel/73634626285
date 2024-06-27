@@ -1,0 +1,28 @@
+svg [id]:hover {
+  outline: 1.5px solid #0d99ff;
+  outline-offset: 1px;
+}
+
+.active-grp {
+  outline: 1.5px solid #0d99ff;
+  outline-offset: 1px;
+}
+
+.inactive-grp {
+  opacity: 0.4;
+}
+
+/** Range Slider Overrides **/
+.single-thumb .range-slider__thumb[data-lower] {
+  width: 0;
+}
+
+.single-thumb .range-slider__range {
+  border-radius: 6px;
+}
+
+.range-slider {
+  margin-right: 50px;
+}
+/** Range Slider Overrides **/
+
