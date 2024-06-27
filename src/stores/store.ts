@@ -17,13 +17,8 @@ export interface GroupProps {
   type: string;
 }
 
-interface Group {
-  colour: string;
-  props: GroupProps[];
-}
-
 export const ydoc = new Y.Doc();
-const provider = new WebrtcProvider(`lottie-store`, ydoc);
+new WebrtcProvider(`lottie-store`, ydoc);
 export const ymap = ydoc.getMap('state');
 
 export const useStore = create<Store>((set) => ({
@@ -31,6 +26,7 @@ export const useStore = create<Store>((set) => ({
   activeGroup: '',
   currentFrame: 0,
   dimensions: { height: 0, width: 0 },
+  fileName: '',
   forceRefreshJson: false,
   frameRate: 0,
   groups: {},
@@ -45,8 +41,8 @@ export const useStore = create<Store>((set) => ({
   isPlaying: true,
   name: '',
   totalTime: 0,
-  clearAll: () => {
-    ymap.set('json', {});
+  clearAll: (name: string) => {
+    ymap.set(name, {});
 
     set(() => ({
       animationObject: null,
@@ -75,6 +71,9 @@ export const useStore = create<Store>((set) => ({
   updateCurrentFrame: (currentFrame: number) => {
     set(() => ({ currentFrame }));
   },
+  updateFileName: (fileName: string) => {
+    set(() => ({ fileName }));
+  },
   updateTotalTime: (totalTime: number) => {
     set(() => ({ totalTime }));
   },
@@ -83,8 +82,8 @@ export const useStore = create<Store>((set) => ({
       isPlaying,
     }));
   },
-  updateJson: (json: Animation) => {
-    ymap.set('json', json);
+  updateJson: (name: string, json: Animation) => {
+    ymap.set(name, json);
 
     set((state) => ({
       json,
@@ -97,12 +96,12 @@ export const useStore = create<Store>((set) => ({
   updateActiveGroup: (group: string) => {
     set(() => ({ activeGroup: group.trim() }));
   },
-  updateFrameRate: (frame: number) => {
-    const json = ymap.get('json') as Animation;
+  updateFrameRate: (name: string, frame: number) => {
+    const json = ymap.get(name) as Animation;
 
     json.fr = frame;
 
-    ymap.set('json', json);
+    ymap.set(name, json);
 
     set((state) => ({
       json: {
@@ -112,11 +111,11 @@ export const useStore = create<Store>((set) => ({
       frame,
     }));
   },
-  updateHeight: (height: number) => {
-    const json = ymap.get('json') as Animation;
+  updateHeight: (name: string, height: number) => {
+    const json = ymap.get(name) as Animation;
     json.h = height;
 
-    ymap.set('json', json);
+    ymap.set(name, json);
 
     set((state) => ({
       json: {
@@ -129,11 +128,11 @@ export const useStore = create<Store>((set) => ({
       },
     }));
   },
-  updateWidth: (width: number) => {
-    const json = ymap.get('json') as Animation;
+  updateWidth: (name: string, width: number) => {
+    const json = ymap.get(name) as Animation;
     json.w = width;
 
-    ymap.set('json', json);
+    ymap.set(name, json);
 
     set((state) => ({
       json: {
@@ -169,21 +168,21 @@ export const useStore = create<Store>((set) => ({
 
     set(() => ({ groups: grps, layers: groups }));
   },
-  removeLayer: (name: string) => {
-    const json = ymap.get('json') as Animation;
+  removeLayer: (name: string, layerName: string) => {
+    const json = ymap.get(name) as Animation;
 
     const layersCopy = json.layers;
     if (layersCopy) {
-      const layerIdx = layersCopy.findIndex((layer: Layer) => (layer as any).nm.trim() === name);
+      const layerIdx = layersCopy.findIndex((layer: Layer) => (layer as any).nm.trim() === layerName);
       layersCopy[layerIdx].ty = 3;
     }
 
-    ymap.set('json', json);
+    ymap.set(name, json);
 
     set((state) => {
       const layersCopy = JSON.parse(JSON.stringify(state.json.layers));
 
-      const layerIdx = layersCopy.findIndex((layer: ShapeElement) => layer.nm.trim() === name);
+      const layerIdx = layersCopy.findIndex((layer: ShapeElement) => layer.nm.trim() === layerName);
       layersCopy[layerIdx].ty = 3;
 
       return {

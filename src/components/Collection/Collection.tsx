@@ -35,7 +35,7 @@ interface Props {
 }
 
 const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
-  const { updateJson } = useStore((state) => state);
+  const { fileName, updateJson } = useStore((state) => state);
 
   const [startCursor, setStartCursor] = useState('');
   const [endCursor, setEndCursor] = useState('');
@@ -54,7 +54,7 @@ const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
   const handleClick = async (jsonUrl: string) => {
     const res = await fetch(jsonUrl);
     const data = await res.json();
-    updateJson(data);
+    updateJson(fileName, data);
   };
 
   return (
@@ -65,7 +65,7 @@ const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
           data.edges.map(({ node: { gifUrl, jsonUrl, name } }) => {
             return (
               <GifWrapper key={gifUrl} onClick={() => handleClick(jsonUrl)}>
-                <img src={gifUrl} />
+                <img alt={name} src={gifUrl} />
                 <p>{name}</p>
               </GifWrapper>
             );

@@ -14,20 +14,20 @@ export const useDrawToCanvas = (
     animationObject,
     activeGroup,
     currentFrame,
-    totalTime,
-    forceRefreshJson,
+    fileName,
     isPlaying,
+    totalTime,
     updateAnimationObject,
     updateCurrentFrame,
-    updateTotalTime,
+    updateFileName,
     updateGroups,
+    updateTotalTime,
   } = useStore((state) => state);
 
-  const newJson = ymap.get('json') as Animation;
-
+  const newJson = ymap.get(fileName) as Animation;
   useEffect(() => {
     ymap.observe(() => {
-      const newJson = ymap.get('json') as Animation;
+      const newJson = ymap.get(fileName) as Animation;
 
       if (newJson && Object.keys(newJson).length > 0) {
         setLayerIdMapping(setIds(newJson.layers as Layer[]));
@@ -50,7 +50,7 @@ export const useDrawToCanvas = (
 
         const updateFrame = (e: BMEnterFrameEvent) => {
           updateCurrentFrame(e.currentTime);
-          if (totalTime == 0) {
+          if (totalTime === 0) {
             updateTotalTime(e.totalTime);
           }
         };
@@ -68,12 +68,15 @@ export const useDrawToCanvas = (
         };
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson]);
 
   useEffect(() => {
     if (newJson && Object.keys(newJson).length > 0 && newJson.layers) {
       setLayerIdMapping(setIds(newJson.layers));
       lottie.destroy();
+
+      updateFileName(newJson.nm ?? '');
 
       const animation = lottie.loadAnimation({
         container: document.getElementById('preview') as Element,
@@ -91,7 +94,7 @@ export const useDrawToCanvas = (
 
       const updateFrame = (e: BMEnterFrameEvent) => {
         updateCurrentFrame(e.currentTime);
-        if (totalTime == 0) {
+        if (totalTime === 0) {
           updateTotalTime(e.totalTime);
         }
       };
@@ -99,5 +102,6 @@ export const useDrawToCanvas = (
 
       animation.addEventListener('enterFrame', updateFrame);
     }
-  }, [forceRefreshJson, newJson?.fr, newJson?.layers, newJson?.w, newJson?.h]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };

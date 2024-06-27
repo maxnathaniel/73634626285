@@ -35,7 +35,7 @@ const rejectStyle = {
 };
 
 export const FileDrop = () => {
-  const { updateJson } = useStore((state) => state);
+  const { fileName, updateJson } = useStore((state) => state);
 
   const onDrop = useCallback((acceptedFiles: any[]) => {
     acceptedFiles.forEach((file) => {
@@ -45,11 +45,12 @@ export const FileDrop = () => {
       reader.onerror = () => console.log('file reading has failed');
       reader.onload = () => {
         const binaryStr = reader.result;
-        updateJson(JSON.parse(binaryStr as string) as Animation);
+        updateJson(fileName, JSON.parse(binaryStr as string) as Animation);
       };
 
       reader.readAsText(file);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { acceptedFiles, fileRejections, getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =

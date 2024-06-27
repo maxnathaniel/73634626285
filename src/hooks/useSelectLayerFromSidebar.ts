@@ -13,5 +13,5 @@ export const useSelectLayerFromSidebar = (layerIdMapping: Record<string, string>
         handleClick(el, activeGroup, layerIdMapping, updateActiveGroup);
       }
     }
-  }, [activeGroup]);
+  }, [activeGroup, layerIdMapping, updateActiveGroup]);
 };

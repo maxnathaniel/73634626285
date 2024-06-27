@@ -33,6 +33,7 @@ function App() {
     activeGroup,
     dimensions,
     groups,
+    fileName,
     removeLayer,
     updateActiveGroup,
     updateHeight,
@@ -40,7 +41,7 @@ function App() {
     updateJson,
     updateWidth,
   } = useStore((state) => state);
-  const newJson = ymap.get('json') as Animation;
+  const newJson = ymap.get(fileName) as Animation;
 
   const [data, setData] = useState<Res | {}>({});
   const [graphqlQuery, setGraphqlQuery] = useState(`
@@ -89,24 +90,27 @@ function App() {
 
   useEffect(() => {
     callGraphqlApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     callGraphqlApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphqlQuery]);
 
   useEffect(() => {
-    const newJson = ymap.get('json') as Animation;
+    const newJson = ymap.get(fileName) as Animation;
 
     ymap.observe(() => {
       if (newJson?.fr) {
         setFrameRate(newJson?.fr);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const newJson = ymap.get('json') as Animation;
+    const newJson = ymap.get(fileName) as Animation;
 
     ymap.observe(() => {
       if (dimensions.height !== newJson?.h) {
@@ -116,24 +120,28 @@ function App() {
         setWidth(newJson?.w);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (frameRate !== newJson?.fr) {
       setFrameRate(newJson.fr);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.fr]);
 
   useEffect(() => {
     if (height !== newJson?.h) {
       setHeight(newJson.h);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.h]);
 
   useEffect(() => {
     if (width !== newJson?.w) {
       setWidth(newJson.w);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.w]);
 
   useRenderColours(selectedColour, setSelectedColour, groups);
@@ -184,15 +192,15 @@ function App() {
 
     if (shapeType === 'gf' || shapeType === 'gs') {
       const { updatedJson } = updateGroupGradColour(newJson, payload);
-      updateJson(updatedJson);
+      updateJson(fileName, updatedJson);
     } else {
       const { updatedJson } = updateGroupColour(newJson, payload);
-      updateJson(updatedJson);
+      updateJson(fileName, updatedJson);
     }
   };
 
   const handleDeleteLayer = (name: string) => {
-    removeLayer(name);
+    removeLayer(fileName, name);
   };
 
   const renderUniqueColours = (name: string) => {
@@ -241,9 +249,9 @@ function App() {
   };
 
   const onUpdateSettings = () => {
-    frameRate && updateFrameRate(frameRate);
-    updateHeight(height === undefined ? newJson.h : height);
-    updateWidth(width === undefined ? newJson.w : width);
+    frameRate && updateFrameRate(fileName, frameRate);
+    updateHeight(fileName, height === undefined ? newJson.h : height);
+    updateWidth(fileName, width === undefined ? newJson.w : width);
   };
 
   return (
@@ -265,7 +273,7 @@ function App() {
                 ))}
               </ul>
             </Sidebar>
-            <Preview activeGroup={activeGroup} />
+            <Preview />
             <Sidebar id="animation-sidebar" width={250}>
               <SettingsTitle>Animation settings</SettingsTitle>
               <SettingsRow>

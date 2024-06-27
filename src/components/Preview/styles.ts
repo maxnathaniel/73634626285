@@ -12,6 +12,10 @@ export const PreviewWrapper = styled.div`
 export const ImageWrapper = styled.div`
   width: 70%;
   margin: 0 auto;
+
+  svg {
+    width: 10%;
+  }
 `;
 
 export const RangeSliderGroup = styled.div`

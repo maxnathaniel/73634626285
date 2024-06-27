@@ -25,6 +25,7 @@ export interface Store {
   animationObject: AnimationItem | null;
   currentFrame: number;
   dimensions: Record<string, number>;
+  fileName: string;
   forceRefreshJson: boolean;
   frameRate: number;
   groups: Record<string, GroupColours[]>;
@@ -32,16 +33,17 @@ export interface Store {
   json: Animation;
   name: string;
   totalTime: number;
-  clearAll: () => void;
+  clearAll: (name: string) => void;
   updateAnimationObject: (animationObject: AnimationItem) => void;
-  updateCurrentFrame: (currentFrame: number) => void;
-  updateTotalTime: (totalFrame: number) => void;
-  updateJson: (json: Animation) => void;
-  updateFrameRate: (frame: number) => void;
-  updateHeight: (height: number) => void;
-  updateWidth: (height: number) => void;
-  updateGroups: (groups: Record<string, Record<string, GroupProps[]> | { layerName: string }>) => void;
   updateActiveGroup: (group: string) => void;
+  updateCurrentFrame: (currentFrame: number) => void;
+  updateFileName: (fileName: string) => void;
+  updateFrameRate: (name: string, frame: number) => void;
+  updateGroups: (groups: Record<string, Record<string, GroupProps[]> | { layerName: string }>) => void;
+  updateHeight: (name: string, height: number) => void;
+  updateJson: (name: string, json: Animation) => void;
+  removeLayer: (name: string, layerName: string) => void;
   updatePlaying: (isPlaying: boolean) => void;
-  removeLayer: (name: string) => void;
+  updateTotalTime: (totalFrame: number) => void;
+  updateWidth: (name: string, height: number) => void;
 }

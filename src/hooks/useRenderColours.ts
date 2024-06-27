@@ -53,5 +53,5 @@ export const useRenderColours = (
 
       setSelectedColour(rgba);
     }
-  }, [groups, selectedColour]);
+  }, [groups, selectedColour, setSelectedColour]);
 };

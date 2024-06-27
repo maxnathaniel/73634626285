@@ -43,5 +43,5 @@ export const useSelectLayerFromPreview = (layerIdMapping: Record<string, string>
       document.getElementById('preview-wrapper')?.removeEventListener('click', (e) => unselectAllGroups(e), true);
       document.getElementById('preview-wrapper')?.removeEventListener('click', removeOpacityProperties, true);
     };
-  }, [activeGroup, layerIdMapping]);
+  }, [activeGroup, layerIdMapping, updateActiveGroup]);
 };

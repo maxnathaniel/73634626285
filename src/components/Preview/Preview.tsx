@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import lottie from 'lottie-web';
 import RangeSlider from 'react-range-slider-input';
 
@@ -11,14 +11,8 @@ import { ImageWrapper, PreviewWrapper, RangeSliderGroup } from './styles';
 import './Preview.css';
 import 'react-range-slider-input/dist/style.css';
 
-interface Props {
-  activeGroup: string;
-}
-
-const Preview: FC<Props> = ({ activeGroup }) => {
-  const { animationObject, currentFrame, isPlaying, totalTime, updateCurrentFrame, updatePlaying } = useStore(
-    (state) => state
-  );
+const Preview = () => {
+  const { animationObject, currentFrame, isPlaying, totalTime, updatePlaying } = useStore((state) => state);
   const [layerIdMapping, setLayerIdMapping] = useState<Record<string, string>>({});
 
   useDrawToCanvas(layerIdMapping, setLayerIdMapping);
