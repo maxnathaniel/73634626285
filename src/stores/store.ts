@@ -42,6 +42,7 @@ export const useStore = create<Store>((set) => ({
   name: '',
   totalTime: 0,
   clearAll: (name: string) => {
+    console.log('yMap', ymap);
     ymap.set(name, {});
 
     set(() => ({

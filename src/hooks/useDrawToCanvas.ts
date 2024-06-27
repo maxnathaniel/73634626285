@@ -38,7 +38,7 @@ export const useDrawToCanvas = (
           container: document.getElementById('preview') as Element,
           renderer: 'svg',
           loop: true,
-          autoplay: isPlaying,
+          autoplay: false,
           animationData: newJson,
         });
 
