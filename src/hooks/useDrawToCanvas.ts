@@ -14,8 +14,8 @@ export const useDrawToCanvas = (
     animationObject,
     activeGroup,
     currentFrame,
-    fileName,
     isPlaying,
+    name,
     totalTime,
     updateAnimationObject,
     updateCurrentFrame,
@@ -24,10 +24,10 @@ export const useDrawToCanvas = (
     updateTotalTime,
   } = useStore((state) => state);
 
-  const newJson = ymap.get(fileName) as Animation;
+  const newJson = ymap.get(name) as Animation;
   useEffect(() => {
     ymap.observe(() => {
-      const newJson = ymap.get(fileName) as Animation;
+      const newJson = ymap.get(name) as Animation;
 
       if (newJson && Object.keys(newJson).length > 0) {
         setLayerIdMapping(setIds(newJson.layers as Layer[]));

@@ -33,7 +33,7 @@ function App() {
     activeGroup,
     dimensions,
     groups,
-    fileName,
+    name,
     removeLayer,
     updateActiveGroup,
     updateHeight,
@@ -41,7 +41,8 @@ function App() {
     updateJson,
     updateWidth,
   } = useStore((state) => state);
-  const newJson = ymap.get(fileName) as Animation;
+
+  const newJson = ymap.get(name) as Animation;
 
   const [data, setData] = useState<Res | {}>({});
   const [graphqlQuery, setGraphqlQuery] = useState(`
@@ -99,7 +100,7 @@ function App() {
   }, [graphqlQuery]);
 
   useEffect(() => {
-    const newJson = ymap.get(fileName) as Animation;
+    const newJson = ymap.get(name) as Animation;
 
     ymap.observe(() => {
       if (newJson?.fr) {
@@ -110,7 +111,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const newJson = ymap.get(fileName) as Animation;
+    const newJson = ymap.get(name) as Animation;
 
     ymap.observe(() => {
       if (dimensions.height !== newJson?.h) {
@@ -192,15 +193,15 @@ function App() {
 
     if (shapeType === 'gf' || shapeType === 'gs') {
       const { updatedJson } = updateGroupGradColour(newJson, payload);
-      updateJson(fileName, updatedJson);
+      updateJson(name, updatedJson);
     } else {
       const { updatedJson } = updateGroupColour(newJson, payload);
-      updateJson(fileName, updatedJson);
+      updateJson(name, updatedJson);
     }
   };
 
   const handleDeleteLayer = (name: string) => {
-    removeLayer(fileName, name);
+    removeLayer(name, name);
   };
 
   const renderUniqueColours = (name: string) => {
@@ -249,9 +250,9 @@ function App() {
   };
 
   const onUpdateSettings = () => {
-    frameRate && updateFrameRate(fileName, frameRate);
-    updateHeight(fileName, height === undefined ? newJson.h : height);
-    updateWidth(fileName, width === undefined ? newJson.w : width);
+    frameRate && updateFrameRate(name, frameRate);
+    updateHeight(name, height === undefined ? newJson.h : height);
+    updateWidth(name, width === undefined ? newJson.w : width);
   };
 
   return (

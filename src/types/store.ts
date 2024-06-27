@@ -25,7 +25,6 @@ export interface Store {
   animationObject: AnimationItem | null;
   currentFrame: number;
   dimensions: Record<string, number>;
-  fileName: string;
   forceRefreshJson: boolean;
   frameRate: number;
   groups: Record<string, GroupColours[]>;

@@ -19,14 +19,13 @@ export interface GroupProps {
 
 export const ydoc = new Y.Doc();
 new WebrtcProvider(`lottie-store`, ydoc);
-export const ymap = ydoc.getMap('state');
+export const ymap = ydoc.getMap();
 
 export const useStore = create<Store>((set) => ({
   animationObject: null,
   activeGroup: '',
   currentFrame: 0,
   dimensions: { height: 0, width: 0 },
-  fileName: '',
   forceRefreshJson: false,
   frameRate: 0,
   groups: {},
@@ -72,7 +71,7 @@ export const useStore = create<Store>((set) => ({
     set(() => ({ currentFrame }));
   },
   updateFileName: (fileName: string) => {
-    set(() => ({ fileName }));
+    set(() => ({ name: fileName }));
   },
   updateTotalTime: (totalTime: number) => {
     set(() => ({ totalTime }));
@@ -89,7 +88,7 @@ export const useStore = create<Store>((set) => ({
       json,
       forceRefreshJson: !state.forceRefreshJson,
       frameRate: json.fr,
-      name: json.nm,
+      name,
       dimensions: { height: json.h, width: json.w },
     }));
   },

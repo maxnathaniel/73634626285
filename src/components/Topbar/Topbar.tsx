@@ -10,10 +10,10 @@ interface Props {
 }
 
 const Topbar: FC<Props> = ({ resetState }) => {
-  const { clearAll, fileName } = useStore((state) => state);
+  const { clearAll, name } = useStore((state) => state);
 
   const handeClick = () => {
-    clearAll(fileName);
+    clearAll(name);
     resetState();
     lottie.destroy();
   };

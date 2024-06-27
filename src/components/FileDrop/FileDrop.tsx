@@ -35,7 +35,7 @@ const rejectStyle = {
 };
 
 export const FileDrop = () => {
-  const { fileName, updateJson } = useStore((state) => state);
+  const { name, updateJson } = useStore((state) => state);
 
   const onDrop = useCallback((acceptedFiles: any[]) => {
     acceptedFiles.forEach((file) => {
@@ -45,7 +45,7 @@ export const FileDrop = () => {
       reader.onerror = () => console.log('file reading has failed');
       reader.onload = () => {
         const binaryStr = reader.result;
-        updateJson(fileName, JSON.parse(binaryStr as string) as Animation);
+        updateJson(name, JSON.parse(binaryStr as string) as Animation);
       };
 
       reader.readAsText(file);
