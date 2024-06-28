@@ -1,5 +1,4 @@
 export * from './Collection';
-export * from './Editor';
 export * from './FileDrop';
 export * from './Pagination';
 export * from './Preview';
