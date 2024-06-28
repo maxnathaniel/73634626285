@@ -87,7 +87,7 @@ export const FileDrop = () => {
   ));
 
   return (
-    <FileDropWrapper>
+    <FileDropWrapper data-testid="filedrop">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
 

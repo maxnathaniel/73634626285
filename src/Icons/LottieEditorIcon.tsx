@@ -5,6 +5,7 @@ interface Props {
 export const LottieEditorIcon = (props: Props) => {
   return (
     <svg
+      data-testid="lottie-icon"
       onClick={props.onClick}
       style={{ cursor: 'pointer' }}
       width="170"
