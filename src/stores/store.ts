@@ -24,6 +24,7 @@ export const ymap = ydoc.getMap();
 export const useStore = create<Store>((set) => ({
   animationObject: null,
   activeGroup: '',
+  activeLottie: '',
   currentFrame: 0,
   dimensions: { height: 0, width: 0 },
   forceRefreshJson: false,
@@ -40,11 +41,11 @@ export const useStore = create<Store>((set) => ({
   isPlaying: true,
   name: '',
   totalTime: 0,
-  clearAll: (name: string) => {
-    ymap.set(name, {});
+  clearAll: () => {
     set(() => ({
       animationObject: null,
       activeGroup: '',
+      activeLottie: '',
       currentFrame: 0,
       dimensions: { height: 0, width: 0 },
       forceRefreshJson: false,
@@ -62,6 +63,9 @@ export const useStore = create<Store>((set) => ({
       name: '',
       totalTime: 0,
     }));
+  },
+  setActiveLottie: (activeLottie: string) => {
+    set(() => ({ activeLottie }));
   },
   updateAnimationObject: (animationObject: AnimationItem) => {
     set(() => ({ animationObject }));

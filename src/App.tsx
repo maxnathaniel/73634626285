@@ -31,9 +31,9 @@ import { lottieFilesGraphqlEndpoint } from './config/urls';
 function App() {
   const {
     activeGroup,
+    activeLottie,
     dimensions,
     groups,
-    name,
     removeLayer,
     updateActiveGroup,
     updateHeight,
@@ -42,7 +42,7 @@ function App() {
     updateWidth,
   } = useStore((state) => state);
 
-  const newJson = ymap.get(name) as Animation;
+  const newJson = ymap.get(activeLottie) as Animation;
 
   const [data, setData] = useState<Res | {}>({});
   const [graphqlQuery, setGraphqlQuery] = useState(`
@@ -100,7 +100,7 @@ function App() {
   }, [graphqlQuery]);
 
   useEffect(() => {
-    const newJson = ymap.get(name) as Animation;
+    const newJson = ymap.get(activeLottie) as Animation;
 
     ymap.observe(() => {
       if (newJson?.fr) {
@@ -111,7 +111,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const newJson = ymap.get(name) as Animation;
+    const newJson = ymap.get(activeLottie) as Animation;
 
     ymap.observe(() => {
       if (dimensions.height !== newJson?.h) {
@@ -193,10 +193,10 @@ function App() {
 
     if (shapeType === 'gf' || shapeType === 'gs') {
       const { updatedJson } = updateGroupGradColour(newJson, payload);
-      updateJson(name, updatedJson);
+      updateJson(activeLottie, updatedJson);
     } else {
       const { updatedJson } = updateGroupColour(newJson, payload);
-      updateJson(name, updatedJson);
+      updateJson(activeLottie, updatedJson);
     }
   };
 
@@ -250,9 +250,9 @@ function App() {
   };
 
   const onUpdateSettings = () => {
-    frameRate && updateFrameRate(name, frameRate);
-    updateHeight(name, height === undefined ? newJson.h : height);
-    updateWidth(name, width === undefined ? newJson.w : width);
+    frameRate && updateFrameRate(activeLottie, frameRate);
+    updateHeight(activeLottie, height === undefined ? newJson.h : height);
+    updateWidth(activeLottie, width === undefined ? newJson.w : width);
   };
 
   return (

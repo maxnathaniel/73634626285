@@ -23,6 +23,7 @@ export interface GroupColours {
 export interface Store {
   activeGroup: string;
   animationObject: AnimationItem | null;
+  activeLottie: string;
   currentFrame: number;
   dimensions: Record<string, number>;
   forceRefreshJson: boolean;
@@ -32,7 +33,8 @@ export interface Store {
   json: Animation;
   name: string;
   totalTime: number;
-  clearAll: (name: string) => void;
+  clearAll: () => void;
+  setActiveLottie: (activeLottie: string) => void;
   updateAnimationObject: (animationObject: AnimationItem) => void;
   updateActiveGroup: (group: string) => void;
   updateCurrentFrame: (currentFrame: number) => void;
