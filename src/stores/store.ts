@@ -70,7 +70,7 @@ export const useStore = create<Store>((set) => ({
   initializeJson: (name: string, json: Animation) => {
     const j = ymap.get(name);
 
-    if (Object.keys(j as any).length === 0) {
+    if (j === undefined) {
       ymap.set(name, json);
 
       set((state) => ({

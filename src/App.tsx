@@ -1,10 +1,10 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { ChromePicker, ColorResult, RGBColor } from 'react-color';
 
 import { useStore, ymap } from './stores/store';
 import { Collection, FileDrop, Preview, Sidebar, Topbar, Res } from './components';
 import { updateGroupColour, updateGroupGradColour } from './utils/initLayers';
-import { useRenderColours } from './hooks';
+import { useRenderColours, useUpdateData } from './hooks';
 
 import { Animation } from './types';
 import { BinIcon } from './Icons';
@@ -27,12 +27,13 @@ import {
 
 import './App.css';
 import { lottieFilesGraphqlEndpoint } from './config/urls';
+import { useInitData } from './hooks/useInitData';
+import { useInitProperties } from './hooks/useInitProperties';
 
 function App() {
   const {
     activeGroup,
     activeLottie,
-    dimensions,
     groups,
     removeLayer,
     updateActiveGroup,
@@ -89,62 +90,9 @@ function App() {
     setData(featuredPublicAnimations);
   };
 
-  useEffect(() => {
-    callGraphqlApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    callGraphqlApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphqlQuery]);
-
-  useEffect(() => {
-    const newJson = ymap.get(activeLottie) as Animation;
-
-    ymap.observe(() => {
-      if (newJson?.fr) {
-        setFrameRate(newJson?.fr);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const newJson = ymap.get(activeLottie) as Animation;
-
-    ymap.observe(() => {
-      if (dimensions.height !== newJson?.h) {
-        setHeight(newJson?.h);
-      }
-      if (dimensions.width !== newJson?.w) {
-        setWidth(newJson?.w);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (newJson && frameRate !== newJson?.fr) {
-      setFrameRate(newJson?.fr);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newJson?.fr]);
-
-  useEffect(() => {
-    if (newJson && height !== newJson?.h) {
-      setHeight(newJson?.h);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newJson?.h]);
-
-  useEffect(() => {
-    if (newJson && width !== newJson?.w) {
-      setWidth(newJson?.w);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newJson?.w]);
-
+  useInitData(callGraphqlApi, setFrameRate, setHeight, setWidth);
+  useUpdateData(callGraphqlApi, graphqlQuery);
+  useInitProperties(frameRate, height, width, setFrameRate, setHeight, setWidth);
   useRenderColours(selectedColour, setSelectedColour, groups);
 
   const resetState = () => {

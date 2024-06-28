@@ -4,14 +4,15 @@ export const PreviewWrapper = styled.div`
   background-color: #f6f8f9;
   display: flex;
   width: 100%;
-  max-height: 100vh;
+  height: calc(100vh - 60px);
   flex-direction: column;
   justify-content: center;
 `;
 
 export const ImageWrapper = styled.div`
-  width: 70%;
-  margin: 0 auto;
+  min-width: 500px;
+  width: 60%;
+  margin: -20px auto 0 auto;
 
   svg {
     width: 10%;
