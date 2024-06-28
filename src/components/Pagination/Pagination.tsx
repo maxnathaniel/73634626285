@@ -2,7 +2,7 @@ import { Dispatch, FC } from 'react';
 
 import { PaginationWrapper } from './styles';
 
-interface Metadata {
+export interface Metadata {
   startCursor: string;
   endCursor: string;
   hasPrevPage: boolean;
@@ -73,8 +73,12 @@ const Pagination: FC<Props> = ({ data: { startCursor, endCursor, hasNextPage, ha
 
   return (
     <PaginationWrapper>
-      <a onClick={handlePrevPageClick}>&laquo;</a>
-      <a onClick={handleNextPageClick}>&raquo;</a>
+      <button type="button" aria-label="prev" onClick={handlePrevPageClick}>
+        &laquo;
+      </button>
+      <button type="button" arial-label="next" onClick={handleNextPageClick}>
+        &raquo;
+      </button>
     </PaginationWrapper>
   );
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PaginationWrapper = styled.div`
   display: inline-block;
 
-  a {
+  button {
     cursor: pointer;
     float: left;
     padding: 8px 16px;
@@ -11,6 +11,8 @@ export const PaginationWrapper = styled.div`
     font-size: 2rem;
     color: #646b73;
     line-height: 2rem;
+    border: 0;
+    background-color: #f6f8f9;
 
     &:active {
       background-color: #4caf50;
@@ -18,7 +20,8 @@ export const PaginationWrapper = styled.div`
     }
 
     &:hover:not(.active) {
-      background-color: #ddd;
+      transition: 0.2s all ease-in-out;
+      background-color: #f0f0f0;
     }
   }
 `;
