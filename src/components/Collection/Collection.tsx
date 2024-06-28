@@ -35,7 +35,7 @@ interface Props {
 }
 
 const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
-  const { setActiveLottie, updateJson } = useStore((state) => state);
+  const { setActiveLottie, initializeJson } = useStore((state) => state);
 
   const [startCursor, setStartCursor] = useState('');
   const [endCursor, setEndCursor] = useState('');
@@ -56,7 +56,7 @@ const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
     const data = await res.json();
 
     setActiveLottie(data.nm);
-    updateJson(data.nm, data);
+    initializeJson(data.nm, data);
   };
 
   return (

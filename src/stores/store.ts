@@ -67,6 +67,25 @@ export const useStore = create<Store>((set) => ({
   setActiveLottie: (activeLottie: string) => {
     set(() => ({ activeLottie }));
   },
+  initializeJson: (name: string, json: Animation) => {
+    const j = ymap.get(name);
+
+    if (Object.keys(j as any).length === 0) {
+      ymap.set(name, json);
+
+      set((state) => ({
+        json,
+        forceRefreshJson: !state.forceRefreshJson,
+        frameRate: json.fr,
+        name,
+        dimensions: { height: json.h, width: json.w },
+      }));
+    } else {
+      set(() => ({
+        name,
+      }));
+    }
+  },
   updateAnimationObject: (animationObject: AnimationItem) => {
     set(() => ({ animationObject }));
   },

@@ -34,6 +34,7 @@ export interface Store {
   name: string;
   totalTime: number;
   clearAll: () => void;
+  initializeJson: (name: string, json: Animation) => void;
   setActiveLottie: (activeLottie: string) => void;
   updateAnimationObject: (animationObject: AnimationItem) => void;
   updateActiveGroup: (group: string) => void;
