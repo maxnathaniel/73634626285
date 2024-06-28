@@ -44,6 +44,8 @@ function App() {
 
   const newJson = ymap.get(name) as Animation;
 
+  console.log('name', name);
+  console.log('newJson', newJson);
   const [data, setData] = useState<Res | {}>({});
   const [graphqlQuery, setGraphqlQuery] = useState(`
     {
@@ -125,22 +127,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (frameRate !== newJson?.fr) {
-      setFrameRate(newJson.fr);
+    if (newJson && frameRate !== newJson?.fr) {
+      setFrameRate(newJson?.fr);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.fr]);
 
   useEffect(() => {
-    if (height !== newJson?.h) {
-      setHeight(newJson.h);
+    if (newJson && height !== newJson?.h) {
+      setHeight(newJson?.h);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.h]);
 
   useEffect(() => {
-    if (width !== newJson?.w) {
-      setWidth(newJson.w);
+    if (newJson && width !== newJson?.w) {
+      setWidth(newJson?.w);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newJson?.w]);
