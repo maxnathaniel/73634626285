@@ -42,7 +42,6 @@ export const useStore = create<Store>((set) => ({
   totalTime: 0,
   clearAll: (name: string) => {
     ymap.set(name, {});
-    console.log('ymap after clearing', ymap);
     set(() => ({
       animationObject: null,
       activeGroup: '',

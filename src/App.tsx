@@ -44,8 +44,6 @@ function App() {
 
   const newJson = ymap.get(name) as Animation;
 
-  console.log('name', name);
-  console.log('newJson', newJson);
   const [data, setData] = useState<Res | {}>({});
   const [graphqlQuery, setGraphqlQuery] = useState(`
     {
