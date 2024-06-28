@@ -4,6 +4,7 @@ import { useStore } from '../../stores/store';
 
 import { CollectionWrapper, FlexWrapper, GifWrapper } from './styles';
 import { Pagination } from '../Pagination';
+import { callApi } from '../../utils/callApi';
 
 interface Node {
   gifUrl: string;
@@ -52,8 +53,7 @@ const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
   }, [data]);
 
   const handleClick = async (jsonUrl: string) => {
-    const res = await fetch(jsonUrl);
-    const data = await res.json();
+    const data = await callApi(jsonUrl, { method: 'GET' });
 
     setActiveLottie(data.nm);
     initializeJson(data.nm, data);
@@ -66,7 +66,7 @@ const Collection: FC<Props> = ({ data, setGraphqlQuery }) => {
           'edges' in data &&
           data.edges.map(({ node: { gifUrl, jsonUrl, name } }) => {
             return (
-              <GifWrapper key={gifUrl} onClick={() => handleClick(jsonUrl)}>
+              <GifWrapper data-testid={name} key={gifUrl} onClick={() => handleClick(jsonUrl)}>
                 <img alt={name} src={gifUrl} />
                 <p>{name}</p>
               </GifWrapper>

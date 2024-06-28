@@ -6,7 +6,7 @@ interface SidebarProps {
 
 export const SidebarWrapper = styled.div<SidebarProps>`
   min-width: ${({ width }) => `${width}px`};
-  height: calc(100vh 0 60px);
+  height: calc(100vh - 60px);
 
   > ul {
     list-style-type: none;

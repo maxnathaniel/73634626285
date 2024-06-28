@@ -29,6 +29,7 @@ import './App.css';
 import { lottieFilesGraphqlEndpoint } from './config/urls';
 import { useInitData } from './hooks/useInitData';
 import { useInitProperties } from './hooks/useInitProperties';
+import { callApi } from './utils/callApi';
 
 function App() {
   const {
@@ -83,10 +84,10 @@ function App() {
       },
       body: JSON.stringify(payload),
     };
-    const res = await fetch(lottieFilesGraphqlEndpoint, options);
     const {
       data: { featuredPublicAnimations },
-    } = await res.json();
+    } = await callApi(lottieFilesGraphqlEndpoint, options);
+
     setData(featuredPublicAnimations);
   };
 
