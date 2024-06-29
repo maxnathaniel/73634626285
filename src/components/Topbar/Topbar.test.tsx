@@ -26,6 +26,16 @@ describe('<Topbar />', () => {
     const { findByTestId } = render(<Topbar resetState={resetState} />);
 
     const homeIcon = await findByTestId('lottie-icon');
+    expect(homeIcon).toBeInTheDocument();
+  });
+
+  test('ResetState to be invoked on click on Home Icon', async () => {
+    const resetState = jest.fn();
+
+    const { findByTestId } = render(<Topbar resetState={resetState} />);
+
+    const homeIcon = await findByTestId('lottie-icon');
+
     await userEvent.click(homeIcon);
 
     expect(resetState).toBeCalled();
