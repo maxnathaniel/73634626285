@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileError, FileWithPath, useDropzone } from 'react-dropzone';
 
 import { useStore } from '../../stores/store';
 import { Animation } from '../../types';
@@ -37,7 +37,7 @@ const rejectStyle = {
 export const FileDrop = () => {
   const { name, updateJson } = useStore((state) => state);
 
-  const onDrop = useCallback((acceptedFiles: any[]) => {
+  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
 
@@ -69,17 +69,17 @@ export const FileDrop = () => {
     [isFocused, isDragAccept, isDragReject]
   );
 
-  const acceptedFileItems = acceptedFiles.map((file: any) => (
+  const acceptedFileItems = acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
   ));
 
-  const fileRejectionItems = fileRejections.map(({ file, errors }: { file: any; errors: any }) => (
+  const fileRejectionItems = fileRejections.map(({ file, errors }: { file: FileWithPath; errors: FileError[] }) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
       <ul>
-        {errors.map((e: any) => (
+        {errors.map((e) => (
           <li key={e.code}>{e.message}</li>
         ))}
       </ul>

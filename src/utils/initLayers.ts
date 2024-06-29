@@ -10,6 +10,13 @@ interface Loc {
   keyFramed: boolean;
 }
 
+interface Colour {
+  time: string;
+  start: number[];
+  end: number[];
+  index: number;
+}
+
 interface Payload {
   groups: ColourProps[];
   newColour: (number | undefined)[];
@@ -164,7 +171,7 @@ const getLoc = (items: any[]) => {
 
       // NOTE: animation
       if (item.c.a === 1) {
-        const colours: any[] = [];
+        const colours: Colour[] = [];
 
         item.c.k.forEach((v: any, i: number) => {
           if ('s' in v) {
@@ -190,7 +197,7 @@ const getLoc = (items: any[]) => {
 
       // NOTE: animation
       if (item.g.k.a === 1) {
-        const colours: any = [];
+        const colours: Colour[] = [];
         item.g.k.k.forEach((v: any, i: number) => {
           if ('s' in v && 'e' in v) {
             const start = toRGBAGradient(v.s);
@@ -266,14 +273,14 @@ export const updateGroupColour = (json: any, payload: Payload) => {
   return { updatedJson: json, colors: '', key: '' };
 };
 
-export const updateGroupGradColour = (json: Animation, payload: Payload) => {
+export const updateGroupGradColour = (json: Animation, payload: Payload & { colourPath?: number[] }) => {
   payload.newColour = payload.newColour.map((v: any, i: number) => (i !== 3 ? (parseInt(v) * 1.0) / 255 : v));
 
   payload.groups.forEach((v) => {
     const { loc, layerId, shapeIdx } = v;
     const [type, layerIdx, assetIdx] = layerId.split('-');
 
-    (payload as any).colourPath = loc;
+    payload.colourPath = loc;
 
     const targetItem =
       type === 'main'

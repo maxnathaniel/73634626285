@@ -3,7 +3,7 @@ import * as Y from 'yjs';
 import { WebrtcProvider } from 'y-webrtc';
 import { AnimationItem } from 'lottie-web';
 
-import { Animation, Layer, ShapeElement, Store } from '../types';
+import { Animation, GroupColours, Layer, ShapeElement, Store } from '../types';
 
 export interface GroupProps {
   colour: number[];
@@ -170,7 +170,7 @@ export const useStore = create<Store>((set) => ({
     set(() => ({ name }));
   },
   updateGroups: (groups: Record<string, Record<string, GroupProps[]> | { layerName: string }>) => {
-    const grps: Record<string, any> = {};
+    const grps: Record<string, GroupColours[]> = {};
 
     Object.keys(groups).forEach((k) => {
       const layerName = (groups[k].layerName as string).trim();
@@ -187,7 +187,7 @@ export const useStore = create<Store>((set) => ({
       });
     });
 
-    set(() => ({ groups: grps, layers: groups }));
+    set(() => ({ groups: grps }));
   },
   removeLayer: (name: string, layerName: string) => {
     const json = ymap.get(name) as Animation;
