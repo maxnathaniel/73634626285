@@ -18,7 +18,7 @@ export interface GroupProps {
 }
 
 export const ydoc = new Y.Doc();
-new WebrtcProvider(`lottie-store`, ydoc);
+new WebrtcProvider(`lottie-store`, ydoc, { signaling: ['https://www.christmaswithiggy.com/ws'] });
 export const ymap = ydoc.getMap();
 
 export const useStore = create<Store>((set) => ({
